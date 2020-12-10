@@ -16,6 +16,8 @@ public class Controller {
 
         setUpRollButtonListener();
 
+        setUpCloseButtonListener();
+
         setUpHighscoreButtonListener();
 
         setUpSelectedDieColorListener();
@@ -71,8 +73,10 @@ public class Controller {
     public void setUpRollButtonListener(){
         window.getYatzyPanel().getRollButton().addActionListener(l -> {
             changeButtonStates(true);
-            if(window.getYatzyPanel().getRollButton().getText().equals("Avsluta")){
-                System.exit(0);
+
+            if(window.getYatzyPanel().getRollButton().getText().equalsIgnoreCase("Spela igen")){
+                window.setVisible(false);
+                new Controller();
             }
 
             Die[] dice = game.rollDice();
@@ -103,6 +107,13 @@ public class Controller {
         });
     }
 
+    public void setUpCloseButtonListener(){
+        window.getYatzyPanel().getCloseButton().setEnabled(false);
+        window.getYatzyPanel().getCloseButton().addActionListener(l -> {
+                System.exit(0);
+        });
+    }
+
     public void setUpStartButtonListener() {
         window.getStartPanel().getStartGameButton().addActionListener(l -> {
             if (window.getStartPanel().getUnrankedGameButton().isSelected()) {
@@ -124,11 +135,7 @@ public class Controller {
 
     public void setUpHighscoreButtonListener(){
         window.getYatzyPanel().getShowScoreButton().addActionListener(l -> {
-            if(window.getYatzyPanel().getShowScoreButton().getText().equalsIgnoreCase("Spela igen")){
-                window.setVisible(false);
-                new Controller();
-            }
-            else new HighScoreWindow(game.database.getListOfScores());
+            new HighScoreWindow(game.database.getListOfScores());
         });
     }
 
@@ -190,8 +197,18 @@ public class Controller {
             game.database.addScore(new Score(game.getPlayerName(), game.getCurrentScore()));
             game.database.saveData();
         }
+        else {
+            new HighScoreWindow(game.database.getListOfScores());
+            String unrankedName = JOptionPane.showInputDialog("Skriv ditt namn för att lägga till i highscore");
+            if(unrankedName != null){
+                game.database.addScore(new Score(unrankedName, game.getCurrentScore()));
+                game.database.saveData();
+                new HighScoreWindow(game.database.getListOfScores());
+            }
 
-        window.getYatzyPanel().getShowScoreButton().setText("Spela igen");
-        window.getYatzyPanel().getRollButton().setText("Avsluta");
+        }
+
+        window.getYatzyPanel().getRollButton().setText("Spela igen");
+        window.getYatzyPanel().getCloseButton().setEnabled(true);
     }
 }
