@@ -7,6 +7,7 @@ public class YatzyWindow extends JFrame {
     private JPanel mainPanel = new JPanel();
     private StartPanel startPanel = new StartPanel();
     private YatzyPanel yatzyPanel = new YatzyPanel();
+    private EndPanel endPanel = new EndPanel();
 
     public YatzyWindow(){
         setUpJFrame();
@@ -35,5 +36,9 @@ public class YatzyWindow extends JFrame {
 
     public YatzyPanel getYatzyPanel() {
         return yatzyPanel;
+    }
+
+    public EndPanel getEndPanel() {
+        return endPanel;
     }
 }

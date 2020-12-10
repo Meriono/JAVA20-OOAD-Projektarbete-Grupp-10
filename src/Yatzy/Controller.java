@@ -70,6 +70,53 @@ public class Controller {
         });
     }
 
+    public void setUpEndPanelListener(){
+        window.getStartPanel().getRankedGameButton().addActionListener(l -> {
+            if(window.getStartPanel().getRankedGameButton().isSelected()){
+                window.getStartPanel().getUnrankedGameButton().setSelected(false);
+                window.getStartPanel().getNameField().setVisible(true);
+                window.getStartPanel().getStartGameButton().setEnabled(true);
+                window.getStartPanel().getRankedGameButton().setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 30));
+                window.getStartPanel().getUnrankedGameButton().setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY,30));
+                window.getStartPanel().setBackground(Color.LIGHT_GRAY);
+                window.getStartPanel().getNameLabel().setVisible(true);
+                window.getStartPanel().repaintTextField();
+            }
+            else if(!window.getStartPanel().getRankedGameButton().isSelected()){
+                window.getStartPanel().getNameField().setVisible(false);
+                window.getStartPanel().getNameLabel().setVisible(false);
+                window.getStartPanel().getRankedGameButton().setBorder(BorderFactory.createLineBorder(
+                        window.getStartPanel().getColor(), 30));
+                window.getStartPanel().getUnrankedGameButton().setBorder(BorderFactory.createLineBorder(
+                        window.getStartPanel().getColor(),30));
+                window.getStartPanel().setBackground(window.getStartPanel().getColor());
+                window.getStartPanel().getStartGameButton().setEnabled(false);
+                window.getStartPanel().repaintTextField();
+            }
+        });
+        window.getStartPanel().getUnrankedGameButton().addActionListener(l -> {
+            if(window.getStartPanel().getUnrankedGameButton().isSelected()){
+                window.getStartPanel().getRankedGameButton().setSelected(false);
+                window.getStartPanel().getNameField().setVisible(false);
+                window.getStartPanel().getNameLabel().setVisible(false);
+                window.getStartPanel().getUnrankedGameButton().setBorder(BorderFactory.createLineBorder(Color.PINK,30));
+                window.getStartPanel().getRankedGameButton().setBorder(BorderFactory.createLineBorder(Color.PINK, 30));
+                window.getStartPanel().setBackground(Color.PINK);
+                window.getStartPanel().getStartGameButton().setEnabled(true);
+                window.getStartPanel().repaintTextField();
+            }
+            else if(!window.getStartPanel().getUnrankedGameButton().isSelected()){
+                window.getStartPanel().getStartGameButton().setEnabled(false);
+                window.getStartPanel().getRankedGameButton().setBorder(BorderFactory.createLineBorder(
+                        window.getStartPanel().getColor(), 30));
+                window.getStartPanel().getUnrankedGameButton().setBorder(BorderFactory.createLineBorder(
+                        window.getStartPanel().getColor(),30));
+                window.getStartPanel().setBackground(
+                        window.getStartPanel().getColor());
+            }
+        });
+    }
+
     public void setUpRollButtonListener(){
         window.getYatzyPanel().getRollButton().addActionListener(l -> {
             changeButtonStates(true);
@@ -129,6 +176,24 @@ public class Controller {
                     game.setPlayerName(name);
                     window.changePanelTo(window.getYatzyPanel());
                 } else System.out.println("Ange namn mellan 1 och 10.");
+            }
+        });
+    }
+
+    public void setUpSaveHighscoreButtonListener() {
+        window.getEndPanel().getSaveHighscoreButton().addActionListener(l ->{
+            new HighScoreWindow(game.database.getListOfScores());
+            window.getEndPanel().setQuestionLabelText("Din totalpoäng är: " + game.getCurrentScore() + "\nVill du lägga till denna i Highscore?");
+            if(window.getEndPanel().getAnswerNoButton().isSelected()){
+                //VAD HÄNDER NÄR MAN KLICKAR PÅ NEJ KNAPPEN
+            } else if(window.getEndPanel().getAnswerYesButton().isSelected()){
+                if(!window.getEndPanel().getNameField().getText().isBlank()
+                    && window.getEndPanel().getNameField().getText().length() < 11){
+                    String unrankedName = window.getEndPanel().getNameField().getText();
+                    game.database.addScore(new Score(unrankedName, game.getCurrentScore()));
+                    game.database.saveData();
+                    new HighScoreWindow(game.database.getListOfScores());
+                } else System.out.println("Ange namn mellan 1 och 10 tecken");
             }
         });
     }
