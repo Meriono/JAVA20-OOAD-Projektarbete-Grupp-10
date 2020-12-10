@@ -198,17 +198,25 @@ public class Controller {
             game.database.saveData();
         }
         else {
-            new HighScoreWindow(game.database.getListOfScores());
+            addHighScoreToUnrankedGame();
+        }
+
+        window.getYatzyPanel().getRollButton().setText("Spela igen");
+        window.getYatzyPanel().getCloseButton().setEnabled(true);
+    }
+
+    public void addHighScoreToUnrankedGame(){
+        new HighScoreWindow(game.database.getListOfScores());
+
+        int dialogSaveScore = JOptionPane.showConfirmDialog (null, "Din totalpoäng är: " + game.getCurrentScore() + "\nVill du lägga till denna i Highscore?","ADD TO HIGHSCORE?",JOptionPane.YES_NO_OPTION);
+
+        if(dialogSaveScore == JOptionPane.YES_OPTION) {
             String unrankedName = JOptionPane.showInputDialog("Skriv ditt namn för att lägga till i highscore");
             if(unrankedName != null){
                 game.database.addScore(new Score(unrankedName, game.getCurrentScore()));
                 game.database.saveData();
                 new HighScoreWindow(game.database.getListOfScores());
             }
-
         }
-
-        window.getYatzyPanel().getRollButton().setText("Spela igen");
-        window.getYatzyPanel().getCloseButton().setEnabled(true);
     }
 }
