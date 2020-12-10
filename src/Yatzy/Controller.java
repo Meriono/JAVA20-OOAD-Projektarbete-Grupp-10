@@ -71,48 +71,51 @@ public class Controller {
     }
 
     public void setUpEndPanelListener(){
-        window.getStartPanel().getRankedGameButton().addActionListener(l -> {
-            if(window.getStartPanel().getRankedGameButton().isSelected()){
-                window.getStartPanel().getUnrankedGameButton().setSelected(false);
-                window.getStartPanel().getNameField().setVisible(true);
-                window.getStartPanel().getStartGameButton().setEnabled(true);
-                window.getStartPanel().getRankedGameButton().setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 30));
-                window.getStartPanel().getUnrankedGameButton().setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY,30));
-                window.getStartPanel().setBackground(Color.LIGHT_GRAY);
-                window.getStartPanel().getNameLabel().setVisible(true);
-                window.getStartPanel().repaintTextField();
+        window.getEndPanel().getAnswerYesButton().addActionListener(l -> {
+            if(window.getEndPanel().getAnswerYesButton().isSelected()){
+                window.getEndPanel().getAnswerNoButton().setSelected(false);
+                window.getEndPanel().getNameField().setVisible(true);
+                window.getEndPanel().getSaveHighscoreButton().setEnabled(true);
+                window.getEndPanel().getAnswerYesButton().setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 30));
+                window.getEndPanel().getAnswerNoButton().setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY,30));
+                window.getEndPanel().setBackground(Color.LIGHT_GRAY);
+                window.getEndPanel().getSaveHighscoreButton().setText("Spara");
+                window.getEndPanel().getNameLabel().setVisible(true);
+                window.getEndPanel().repaintTextField();
             }
-            else if(!window.getStartPanel().getRankedGameButton().isSelected()){
-                window.getStartPanel().getNameField().setVisible(false);
-                window.getStartPanel().getNameLabel().setVisible(false);
-                window.getStartPanel().getRankedGameButton().setBorder(BorderFactory.createLineBorder(
-                        window.getStartPanel().getColor(), 30));
-                window.getStartPanel().getUnrankedGameButton().setBorder(BorderFactory.createLineBorder(
-                        window.getStartPanel().getColor(),30));
-                window.getStartPanel().setBackground(window.getStartPanel().getColor());
-                window.getStartPanel().getStartGameButton().setEnabled(false);
-                window.getStartPanel().repaintTextField();
+            else if(!window.getEndPanel().getAnswerYesButton().isSelected()){
+                window.getEndPanel().getNameField().setVisible(false);
+                window.getEndPanel().getNameLabel().setVisible(false);
+                window.getEndPanel().getAnswerYesButton().setBorder(BorderFactory.createLineBorder(
+                        window.getEndPanel().getColor(), 30));
+                window.getEndPanel().getAnswerNoButton().setBorder(BorderFactory.createLineBorder(
+                        window.getEndPanel().getColor(),30));
+                window.getEndPanel().setBackground(window.getStartPanel().getColor());
+                window.getEndPanel().getSaveHighscoreButton().setText("Tillbaka");
+                window.getEndPanel().getSaveHighscoreButton().setEnabled(false);
+                window.getEndPanel().repaintTextField();
             }
         });
-        window.getStartPanel().getUnrankedGameButton().addActionListener(l -> {
-            if(window.getStartPanel().getUnrankedGameButton().isSelected()){
-                window.getStartPanel().getRankedGameButton().setSelected(false);
-                window.getStartPanel().getNameField().setVisible(false);
-                window.getStartPanel().getNameLabel().setVisible(false);
-                window.getStartPanel().getUnrankedGameButton().setBorder(BorderFactory.createLineBorder(Color.PINK,30));
-                window.getStartPanel().getRankedGameButton().setBorder(BorderFactory.createLineBorder(Color.PINK, 30));
-                window.getStartPanel().setBackground(Color.PINK);
-                window.getStartPanel().getStartGameButton().setEnabled(true);
-                window.getStartPanel().repaintTextField();
+        window.getEndPanel().getAnswerNoButton().addActionListener(l -> {
+            if(window.getEndPanel().getAnswerNoButton().isSelected()){
+                window.getEndPanel().getAnswerYesButton().setSelected(false);
+                window.getEndPanel().getNameField().setVisible(false);
+                window.getEndPanel().getNameLabel().setVisible(false);
+                window.getEndPanel().getAnswerNoButton().setBorder(BorderFactory.createLineBorder(Color.PINK,30));
+                window.getEndPanel().getAnswerYesButton().setBorder(BorderFactory.createLineBorder(Color.PINK, 30));
+                window.getEndPanel().setBackground(Color.PINK);
+                window.getEndPanel().getSaveHighscoreButton().setText("Tillbaka");
+                window.getEndPanel().getSaveHighscoreButton().setEnabled(true);
+                window.getEndPanel().repaintTextField();
             }
-            else if(!window.getStartPanel().getUnrankedGameButton().isSelected()){
-                window.getStartPanel().getStartGameButton().setEnabled(false);
-                window.getStartPanel().getRankedGameButton().setBorder(BorderFactory.createLineBorder(
-                        window.getStartPanel().getColor(), 30));
-                window.getStartPanel().getUnrankedGameButton().setBorder(BorderFactory.createLineBorder(
-                        window.getStartPanel().getColor(),30));
-                window.getStartPanel().setBackground(
-                        window.getStartPanel().getColor());
+            else if(!window.getEndPanel().getAnswerNoButton().isSelected()){
+                window.getEndPanel().getSaveHighscoreButton().setEnabled(false);
+                window.getEndPanel().getAnswerYesButton().setBorder(BorderFactory.createLineBorder(
+                        window.getEndPanel().getColor(), 30));
+                window.getEndPanel().getAnswerNoButton().setBorder(BorderFactory.createLineBorder(
+                        window.getEndPanel().getColor(),30));
+                window.getEndPanel().setBackground(
+                        window.getEndPanel().getColor());
             }
         });
     }
@@ -182,10 +185,8 @@ public class Controller {
 
     public void setUpSaveHighscoreButtonListener() {
         window.getEndPanel().getSaveHighscoreButton().addActionListener(l ->{
-            new HighScoreWindow(game.database.getListOfScores());
-            window.getEndPanel().setQuestionLabelText("Din totalpoäng är: " + game.getCurrentScore() + "\nVill du lägga till denna i Highscore?");
             if(window.getEndPanel().getAnswerNoButton().isSelected()){
-                //VAD HÄNDER NÄR MAN KLICKAR PÅ NEJ KNAPPEN
+                window.changePanelTo(window.getYatzyPanel());
             } else if(window.getEndPanel().getAnswerYesButton().isSelected()){
                 if(!window.getEndPanel().getNameField().getText().isBlank()
                     && window.getEndPanel().getNameField().getText().length() < 11){
@@ -193,6 +194,7 @@ public class Controller {
                     game.database.addScore(new Score(unrankedName, game.getCurrentScore()));
                     game.database.saveData();
                     new HighScoreWindow(game.database.getListOfScores());
+                    window.changePanelTo(window.getYatzyPanel());
                 } else System.out.println("Ange namn mellan 1 och 10 tecken");
             }
         });
@@ -270,18 +272,11 @@ public class Controller {
         window.getYatzyPanel().getCloseButton().setEnabled(true);
     }
 
-    public void addHighScoreToUnrankedGame(){
+    public void addHighScoreToUnrankedGame() {
         new HighScoreWindow(game.database.getListOfScores());
-
-        int dialogSaveScore = JOptionPane.showConfirmDialog (null, "Din totalpoäng är: " + game.getCurrentScore() + "\nVill du lägga till denna i Highscore?","ADD TO HIGHSCORE?",JOptionPane.YES_NO_OPTION);
-
-        if(dialogSaveScore == JOptionPane.YES_OPTION) {
-            String unrankedName = JOptionPane.showInputDialog("Skriv ditt namn för att lägga till i highscore");
-            if(unrankedName != null){
-                game.database.addScore(new Score(unrankedName, game.getCurrentScore()));
-                game.database.saveData();
-                new HighScoreWindow(game.database.getListOfScores());
-            }
-        }
+        window.getEndPanel().setQuestionLabelText(game.getCurrentScore());
+        window.changePanelTo(window.getEndPanel());
+        setUpEndPanelListener();
+        setUpSaveHighscoreButtonListener();
     }
 }

@@ -9,27 +9,28 @@ public class EndPanel extends JPanel {
     private Color color = new Color(184,207,229);
 
     // Panels
-    private JPanel topPanel = new JPanel(new GridLayout(1,2,10,10));
+    private JPanel topPanel = new JPanel();
     private JPanel middlePanel = new JPanel();
     private JPanel bottomPanel = new JPanel(); // new GridLayout(1,1)
 
     // Buttons
     private JToggleButton answerYesButton = new JToggleButton("Ja");
     private JToggleButton answerNoButton = new JToggleButton("Nej");
-    private JButton saveHighscoreButton = new JButton("Spara");
+    private JButton saveHighscoreButton = new JButton("Tillbaka");
 
     // Textfield
     private JTextField nameField = new JTextField("",14);
 
     // Label
-    private JLabel questionLabel = new JLabel();
+    private JLabel scoreLabel = new JLabel("Här ska poängen stå");
+    private JLabel questionLabel = new JLabel("Här ska frågan stå");
     private JLabel nameLabel = new JLabel("Enter your name: ");
 
     public EndPanel(){
         setUpThisJPanel();
         setUpJPanels();
-        setUpAndAddToggleButtons();
         setUpAndAddLabel();
+        setUpAndAddToggleButtons();
         setUpAndAddTextfield();
         setUpAndAddSaveHighscoreButton();
 
@@ -56,9 +57,11 @@ public class EndPanel extends JPanel {
         answerYesButton.setOpaque(true);
         answerYesButton.setBorder(BorderFactory.createLineBorder(color,30));
         answerYesButton.setFont(new Font("SansSerif", Font.BOLD,20));
+        answerYesButton.setSize(20,30);
         answerNoButton.setOpaque(true);
         answerNoButton.setBorder(BorderFactory.createLineBorder(color,30));
         answerNoButton.setFont(new Font("SansSerif", Font.BOLD,20));
+        answerNoButton.setSize(50,80);
         topPanel.add(answerYesButton);
         topPanel.add(answerNoButton);
     }
@@ -68,7 +71,9 @@ public class EndPanel extends JPanel {
         nameLabel.setVisible(false);
         middlePanel.add(nameLabel, CENTER_ALIGNMENT);
 
+        scoreLabel.setFont(new Font("SansSerif", Font.BOLD, 25));
         questionLabel.setFont(new Font("SansSerif", Font.BOLD, 25));
+        topPanel.add(scoreLabel, CENTER_ALIGNMENT);
         topPanel.add(questionLabel, CENTER_ALIGNMENT);
     }
 
@@ -114,7 +119,8 @@ public class EndPanel extends JPanel {
         return color;
     }
 
-    public void setQuestionLabelText(String question) {
-        questionLabel.setText(question);
+    public void setQuestionLabelText(int score) {
+        scoreLabel.setText("Din totalpoäng är: " + score);
+        questionLabel.setText("Vill du lägga till denna i Highscore?");
     }
 }
