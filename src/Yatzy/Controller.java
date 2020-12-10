@@ -74,6 +74,7 @@ public class Controller {
             if(window.getYatzyPanel().getRollButton().getText().equals("Avsluta")){
                 System.exit(0);
             }
+
             Die[] dice = game.rollDice();
             JToggleButton[] toggleButtons = getDiceButtons();
             for (int i = 0; i < dice.length; i++) {
@@ -123,7 +124,11 @@ public class Controller {
 
     public void setUpHighscoreButtonListener(){
         window.getYatzyPanel().getShowScoreButton().addActionListener(l -> {
-            new HighScoreWindow(game.database.getListOfScores());
+            if(window.getYatzyPanel().getShowScoreButton().getText().equalsIgnoreCase("Spela igen")){
+                window.setVisible(false);
+                new Controller();
+            }
+            else new HighScoreWindow(game.database.getListOfScores());
         });
     }
 
@@ -186,6 +191,7 @@ public class Controller {
             game.database.saveData();
         }
 
+        window.getYatzyPanel().getShowScoreButton().setText("Spela igen");
         window.getYatzyPanel().getRollButton().setText("Avsluta");
     }
 }
