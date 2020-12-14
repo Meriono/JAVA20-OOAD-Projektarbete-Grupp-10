@@ -9,7 +9,8 @@ public class EndPanel extends JPanel {
     private Color color = new Color(184,207,229);
 
     // Panels
-    private JPanel topPanel = new JPanel();
+    private JPanel questionsPanel = new JPanel();
+    private JPanel topPanel = new JPanel(new GridLayout(1,2,10,10));
     private JPanel middlePanel = new JPanel();
     private JPanel bottomPanel = new JPanel(); // new GridLayout(1,1)
 
@@ -39,8 +40,9 @@ public class EndPanel extends JPanel {
     }
 
     public void setUpThisJPanel(){
-        this.setBackground(color);  // TestFärg
-        this.setLayout(new GridLayout(3,1,10,10));
+        this.setBackground(color);
+        questionsPanel.setBackground(color);
+        this.setLayout(new GridLayout(4,1,10,10));
         this.setPreferredSize(new Dimension(500, 480));
     }
 
@@ -48,6 +50,7 @@ public class EndPanel extends JPanel {
         topPanel.setOpaque(false);
         middlePanel.setOpaque(false);
         bottomPanel.setOpaque(false);
+        this.add(questionsPanel);
         this.add(topPanel);
         this.add(middlePanel);
         this.add(bottomPanel);
@@ -61,7 +64,7 @@ public class EndPanel extends JPanel {
         answerNoButton.setOpaque(true);
         answerNoButton.setBorder(BorderFactory.createLineBorder(color,30));
         answerNoButton.setFont(new Font("SansSerif", Font.BOLD,20));
-        answerNoButton.setSize(50,80);
+        answerNoButton.setSize(20,30);
         topPanel.add(answerYesButton);
         topPanel.add(answerNoButton);
     }
@@ -73,8 +76,8 @@ public class EndPanel extends JPanel {
 
         scoreLabel.setFont(new Font("SansSerif", Font.BOLD, 25));
         questionLabel.setFont(new Font("SansSerif", Font.BOLD, 25));
-        topPanel.add(scoreLabel, CENTER_ALIGNMENT);
-        topPanel.add(questionLabel, CENTER_ALIGNMENT);
+        questionsPanel.add(scoreLabel, CENTER_ALIGNMENT);
+        questionsPanel.add(questionLabel, CENTER_ALIGNMENT);
     }
 
     public void setUpAndAddTextfield(){
@@ -122,5 +125,9 @@ public class EndPanel extends JPanel {
     public void setQuestionLabelText(int score) {
         scoreLabel.setText("Din totalpoäng är: " + score);
         questionLabel.setText("Vill du lägga till denna i Highscore?");
+    }
+
+    public JPanel getQuestionsPanel() {
+        return questionsPanel;
     }
 }

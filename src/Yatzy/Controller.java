@@ -79,6 +79,7 @@ public class Controller {
                 window.getEndPanel().getAnswerYesButton().setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 30));
                 window.getEndPanel().getAnswerNoButton().setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY,30));
                 window.getEndPanel().setBackground(Color.LIGHT_GRAY);
+                window.getEndPanel().getQuestionsPanel().setBackground(Color.LIGHT_GRAY);
                 window.getEndPanel().getSaveUnrankedHighscoreButton().setText("Spara");
                 window.getEndPanel().getNameLabel().setVisible(true);
                 window.getEndPanel().repaintTextField();
@@ -91,6 +92,7 @@ public class Controller {
                 window.getEndPanel().getAnswerNoButton().setBorder(BorderFactory.createLineBorder(
                         window.getEndPanel().getColor(),30));
                 window.getEndPanel().setBackground(window.getStartPanel().getColor());
+                window.getEndPanel().getQuestionsPanel().setBackground(window.getStartPanel().getColor());
                 window.getEndPanel().getSaveUnrankedHighscoreButton().setText("Tillbaka");
                 window.getEndPanel().getSaveUnrankedHighscoreButton().setEnabled(false);
                 window.getEndPanel().repaintTextField();
@@ -104,6 +106,7 @@ public class Controller {
                 window.getEndPanel().getAnswerNoButton().setBorder(BorderFactory.createLineBorder(Color.PINK,30));
                 window.getEndPanel().getAnswerYesButton().setBorder(BorderFactory.createLineBorder(Color.PINK, 30));
                 window.getEndPanel().setBackground(Color.PINK);
+                window.getEndPanel().getQuestionsPanel().setBackground(Color.PINK);
                 window.getEndPanel().getSaveUnrankedHighscoreButton().setText("Tillbaka");
                 window.getEndPanel().getSaveUnrankedHighscoreButton().setEnabled(true);
                 window.getEndPanel().repaintTextField();
@@ -116,6 +119,7 @@ public class Controller {
                         window.getEndPanel().getColor(),30));
                 window.getEndPanel().setBackground(
                         window.getEndPanel().getColor());
+                window.getEndPanel().getQuestionsPanel().setBackground(window.getStartPanel().getColor());
             }
         });
     }
