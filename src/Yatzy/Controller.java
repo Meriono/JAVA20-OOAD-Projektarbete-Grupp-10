@@ -6,6 +6,7 @@ import java.awt.*;
 public class Controller {
 
     private YatzyWindow window;
+    private HighScoreWindow hcWindow;
     private Game game;
 
     public Controller() {
@@ -197,7 +198,11 @@ public class Controller {
                     String unrankedName = window.getEndPanel().getNameField().getText();
                     game.database.addScore(new Score(unrankedName, game.getCurrentScore()));
                     game.database.saveData();
-                    new HighScoreWindow(game.database.getListOfScores());
+                    if(hcWindow != null){
+                        hcWindow.dispose();
+                        hcWindow = new HighScoreWindow(game.database.getListOfScores());
+                    }
+                    else hcWindow = new HighScoreWindow(game.database.getListOfScores());
                     window.changePanelTo(window.getYatzyPanel());
                 } else System.out.println("Ange namn mellan 1 och 10 tecken");
             }
@@ -206,7 +211,11 @@ public class Controller {
 
     public void setUpHighscoreButtonListener(){
         window.getYatzyPanel().getShowScoreButton().addActionListener(l -> {
-            new HighScoreWindow(game.database.getListOfScores());
+            if(hcWindow != null){
+                hcWindow.dispose();
+                hcWindow = new HighScoreWindow(game.database.getListOfScores());
+            }
+            else hcWindow = new HighScoreWindow(game.database.getListOfScores());
         });
     }
 
@@ -277,7 +286,12 @@ public class Controller {
     }
 
     public void addHighScoreToUnrankedGame() {
-        new HighScoreWindow(game.database.getListOfScores());
+        if(hcWindow != null){
+            hcWindow.dispose();
+            hcWindow = new HighScoreWindow(game.database.getListOfScores());
+        }
+        else hcWindow = new HighScoreWindow(game.database.getListOfScores());
+
         window.getEndPanel().setQuestionLabelText(game.getCurrentScore());
         window.changePanelTo(window.getEndPanel());
         setUpEndPanelListener();
