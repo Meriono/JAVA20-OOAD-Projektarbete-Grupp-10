@@ -75,11 +75,11 @@ public class Controller {
             if(window.getEndPanel().getAnswerYesButton().isSelected()){
                 window.getEndPanel().getAnswerNoButton().setSelected(false);
                 window.getEndPanel().getNameField().setVisible(true);
-                window.getEndPanel().getSaveHighscoreButton().setEnabled(true);
+                window.getEndPanel().getSaveUnrankedHighscoreButton().setEnabled(true);
                 window.getEndPanel().getAnswerYesButton().setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY, 30));
                 window.getEndPanel().getAnswerNoButton().setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY,30));
                 window.getEndPanel().setBackground(Color.LIGHT_GRAY);
-                window.getEndPanel().getSaveHighscoreButton().setText("Spara");
+                window.getEndPanel().getSaveUnrankedHighscoreButton().setText("Spara");
                 window.getEndPanel().getNameLabel().setVisible(true);
                 window.getEndPanel().repaintTextField();
             }
@@ -91,8 +91,8 @@ public class Controller {
                 window.getEndPanel().getAnswerNoButton().setBorder(BorderFactory.createLineBorder(
                         window.getEndPanel().getColor(),30));
                 window.getEndPanel().setBackground(window.getStartPanel().getColor());
-                window.getEndPanel().getSaveHighscoreButton().setText("Tillbaka");
-                window.getEndPanel().getSaveHighscoreButton().setEnabled(false);
+                window.getEndPanel().getSaveUnrankedHighscoreButton().setText("Tillbaka");
+                window.getEndPanel().getSaveUnrankedHighscoreButton().setEnabled(false);
                 window.getEndPanel().repaintTextField();
             }
         });
@@ -104,12 +104,12 @@ public class Controller {
                 window.getEndPanel().getAnswerNoButton().setBorder(BorderFactory.createLineBorder(Color.PINK,30));
                 window.getEndPanel().getAnswerYesButton().setBorder(BorderFactory.createLineBorder(Color.PINK, 30));
                 window.getEndPanel().setBackground(Color.PINK);
-                window.getEndPanel().getSaveHighscoreButton().setText("Tillbaka");
-                window.getEndPanel().getSaveHighscoreButton().setEnabled(true);
+                window.getEndPanel().getSaveUnrankedHighscoreButton().setText("Tillbaka");
+                window.getEndPanel().getSaveUnrankedHighscoreButton().setEnabled(true);
                 window.getEndPanel().repaintTextField();
             }
             else if(!window.getEndPanel().getAnswerNoButton().isSelected()){
-                window.getEndPanel().getSaveHighscoreButton().setEnabled(false);
+                window.getEndPanel().getSaveUnrankedHighscoreButton().setEnabled(false);
                 window.getEndPanel().getAnswerYesButton().setBorder(BorderFactory.createLineBorder(
                         window.getEndPanel().getColor(), 30));
                 window.getEndPanel().getAnswerNoButton().setBorder(BorderFactory.createLineBorder(
@@ -183,8 +183,8 @@ public class Controller {
         });
     }
 
-    public void setUpSaveHighscoreButtonListener() {
-        window.getEndPanel().getSaveHighscoreButton().addActionListener(l ->{
+    public void setUpSaveUnrankedHighscoreButtonListener() {
+        window.getEndPanel().getSaveUnrankedHighscoreButton().addActionListener(l ->{
             if(window.getEndPanel().getAnswerNoButton().isSelected()){
                 window.changePanelTo(window.getYatzyPanel());
             } else if(window.getEndPanel().getAnswerYesButton().isSelected()){
@@ -277,6 +277,6 @@ public class Controller {
         window.getEndPanel().setQuestionLabelText(game.getCurrentScore());
         window.changePanelTo(window.getEndPanel());
         setUpEndPanelListener();
-        setUpSaveHighscoreButtonListener();
+        setUpSaveUnrankedHighscoreButtonListener();
     }
 }

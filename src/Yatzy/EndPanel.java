@@ -16,7 +16,7 @@ public class EndPanel extends JPanel {
     // Buttons
     private JToggleButton answerYesButton = new JToggleButton("Ja");
     private JToggleButton answerNoButton = new JToggleButton("Nej");
-    private JButton saveHighscoreButton = new JButton("Tillbaka");
+    private JButton saveUnrankedHighscoreButton = new JButton("Tillbaka");
 
     // Textfield
     private JTextField nameField = new JTextField("",14);
@@ -85,9 +85,9 @@ public class EndPanel extends JPanel {
     }
 
     public void setUpAndAddSaveHighscoreButton(){
-        saveHighscoreButton.setFont(new Font("SansSerif", Font.BOLD,20));
-        saveHighscoreButton.setEnabled(false);
-        bottomPanel.add(saveHighscoreButton);
+        saveUnrankedHighscoreButton.setFont(new Font("SansSerif", Font.BOLD,20));
+        saveUnrankedHighscoreButton.setEnabled(false);
+        bottomPanel.add(saveUnrankedHighscoreButton);
     }
 
     public void repaintTextField(){
@@ -107,8 +107,8 @@ public class EndPanel extends JPanel {
         return answerNoButton;
     }
 
-    public JButton getSaveHighscoreButton() {
-        return saveHighscoreButton;
+    public JButton getSaveUnrankedHighscoreButton() {
+        return saveUnrankedHighscoreButton;
     }
 
     public JLabel getNameLabel() {
